@@ -1,5 +1,5 @@
 name: Reusable workflow test
-on: workflow_call
+on: workflow_dispatch
 
 jobs:
   Call-remote-workflow:
