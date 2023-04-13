@@ -1,5 +1,14 @@
 name: Reusable workflow test
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      VAR_ENV:
+        required: true
+        type: choice
+        options:
+          - DV
+          - PR
+
 
 jobs:
   Call-remote-workflow:
@@ -8,3 +17,10 @@ jobs:
     with:
       REMOTE_VAR: ${{ vars.PARAMETER }}
       ENVIRONMENT: testenv
+      
+  test-dynamic-variables:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Affiche variable dynamique
+          run: echo "DYNAMIC VAR ${{ vars[format('TESTVAR_{0}',inputs.VAR_ENV)] }}"
+    
