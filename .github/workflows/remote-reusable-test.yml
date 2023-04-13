@@ -4,6 +4,7 @@ on: workflow_dispatch
 jobs:
   Call-remote-workflow:
     uses: AlexisLessard/gh-reusable-workflow-test/.github/workflows/reusable-workflow.yml@main
+    secrets: inherit
     with:
       REMOTE_VAR: ${{ vars.PARAMETER }}
       ENVIRONMENT: testenv
