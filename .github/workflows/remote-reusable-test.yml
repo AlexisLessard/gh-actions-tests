@@ -1,0 +1,9 @@
+name: Reusable workflow test
+on: workflow_call
+
+jobs:
+  Call-remote-workflow:
+    uses: AlexisLessard/gh-reusable-workflow-test/.github/workflows/reusable-workflow.yml@main
+    with:
+      REMOTE_VAR: ${{ vars.PARAMETER }}
+      ENVIRONMENT: testenv
