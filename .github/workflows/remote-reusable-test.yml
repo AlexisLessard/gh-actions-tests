@@ -13,10 +13,11 @@ on:
 jobs:
   Call-remote-workflow:
     uses: AlexisLessard/gh-reusable-workflow-test/.github/workflows/reusable-workflow.yml@main
-    secrets: inherit
     with:
       REMOTE_VAR: ${{ vars.PARAMETER }}
       ENVIRONMENT: testenv
+    secrets:
+      RECEIVED_SECRET: ${{ secrets.SECRET_ID }}
       
   test-dynamic-variables:
       runs-on: ubuntu-latest
