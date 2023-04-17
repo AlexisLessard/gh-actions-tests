@@ -1,0 +1,35 @@
+name: JSON extraction test 
+on:
+  workflow_dispatch:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: choice
+        options:
+          - DV
+          - PR
+
+jobs:
+  extracts-configuration:
+    runs-on: ubuntu-latest
+    outputs:
+      json_configuration: ${{ steps.extraction.outputs.json }}
+    steps:
+      - run: "ls -l"
+      - if: ${{ inputs.ENVIRONMENT == 'DV' }}
+        run: echo "json_tmp=`cat .github/workflows/Configuration/dv.json`" >> $GITHUB_ENV
+      - if: ${{ inputs.ENVIRONMENT == 'PR' }}
+        run: echo "json_tmp=`cat .github/workflows/Configuration/pr.json`" >> $GITHUB_ENV
+      - id: extraction
+        run:  echo "json=${{ env.json_tmp }}" >> "$GITHUB_OUTPUT"
+  shows-configuration:
+    runs-on: ubuntu-latest
+    needs: extracts-configuration
+    steps:
+      - name: Montre la configuration recu
+        env:
+          CONFIG_VALUE: ${{ fromJSON(needs.extract-configuration.outputs.json).variable }}
+        run: echo ${{ env.CONFIG_VALUE }}
+      
+      
+
