@@ -16,25 +16,34 @@ jobs:
       json_configuration: ${{ steps.extraction.outputs.json }}
     steps:
       - uses: actions/checkout@v3
-      - if: ${{ inputs.environment == 'DV' }}
-        run: |
-          echo 'json_tmp<<EOF' >> $GITHUB_ENV 
-          cat .github/workflows/configuration/dv.json >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-      - if: ${{ inputs.environment == 'PR' }}
-        run: |
-          echo 'json_tmp<<EOF' >> $GITHUB_ENV 
-          cat .github/workflows/configuration/pr.json >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-      - id: extraction
-        run:  echo "json=${{ env.json_tmp }}" >> "$GITHUB_OUTPUT"
+      - name: get config dv
+        if: ${{ inputs.ENVIRONMENT == 'DV' }}
+        id: dv 
+        uses: notiz-dev/github-action-json-property@v0.2.0
+        with: 
+          path: '.github/workflows/Configuration/dv.json'
+          prop_path: 'variable'
+      - name: output config dv 
+        if: ${{ inputs.ENVIRONMENT == 'DV' }}
+        run:  echo "json=${{ steps.dv.outputs.prop }}" >> "$GITHUB_OUTPUT"
+      - name: get config pr 
+        if: ${{ inputs.ENVIRONMENT == 'PR' }}
+        id: pr 
+        uses: notiz-dev/github-action-json-property@v0.2.0
+        with: 
+          path: '.github/workflows/Configuration/pr.json'
+          prop_path: 'variable'
+      - name: output config dv 
+        if: ${{ inputs.ENVIRONMENT == 'PR' }}
+        run:  echo "json=${{ steps.pr.outputs.prop }}" >> "$GITHUB_OUTPUT"
+
   shows-configuration:
     runs-on: ubuntu-latest
     needs: extracts-configuration
     steps:
       - name: Montre la configuration recu
         env:
-          CONFIG_VALUE: ${{ fromJSON(needs.extract-configuration.outputs.json).variable }}
+          CONFIG_VALUE: ${{ needs.extract-configuration.outputs.json }}
         run: echo ${{ env.CONFIG_VALUE }}
       
       
