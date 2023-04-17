@@ -38,6 +38,7 @@ jobs:
         run: echo ${{ env.var1 }}
   execution:
     runs-on: ubuntu-latest
+    needs: ['configuration']
     steps:
       - name: Echo la variable dans une autre job
         run: echo ${{ env.var1 }}
