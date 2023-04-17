@@ -37,6 +37,7 @@ jobs:
       - name: Echo la variable dans la même job
         run: echo ${{ env.var1 }}
   execution:
+  # Les variables d'environnement ne se passent pas entre les jobs
     runs-on: ubuntu-latest
     needs: ['configuration']
     steps:
