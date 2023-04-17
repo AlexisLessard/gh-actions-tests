@@ -19,11 +19,11 @@ jobs:
       - if: ${{ inputs.ENVIRONMENT == 'DV' }}
         run: |
           CONFIG=$(cat .github/workflows/Configuration/dv.json)
-          echo "json_tmp=$CONFIG >> $GITHUB_ENV
+          echo "json_tmp=$CONFIG" >> $GITHUB_ENV
       - if: ${{ inputs.ENVIRONMENT == 'PR' }}
         run: |
           CONFIG=$(cat .github/workflows/Configuration/pr.json)
-          echo "json_tmp=$CONFIG >> $GITHUB_ENV
+          echo "json_tmp=$CONFIG" >> $GITHUB_ENV
       - id: extraction
         run:  echo "json=${{ env.json_tmp }}" >> "$GITHUB_OUTPUT"
   shows-configuration:
