@@ -16,14 +16,16 @@ jobs:
       json_configuration: ${{ steps.extraction.outputs.json }}
     steps:
       - uses: actions/checkout@v3
-      - if: ${{ inputs.ENVIRONMENT == 'DV' }}
+      - if: ${{ inputs.environment == 'dv' }}
         run: |
-          CONFIG=$(cat .github/workflows/Configuration/dv.json)
-          echo "json_tmp=$CONFIG" >> $GITHUB_ENV
-      - if: ${{ inputs.ENVIRONMENT == 'PR' }}
+          echo 'json_tmp<<eof' >> $github_env
+          cat .github/workflows/configuration/dv.json >> $github_env
+          echo 'eof' >> $github_env
+      - if: ${{ inputs.environment == 'pr' }}
         run: |
-          CONFIG=$(cat .github/workflows/Configuration/pr.json)
-          echo "json_tmp=$CONFIG" >> $GITHUB_ENV
+          echo 'json_tmp<<eof' >> $github_env
+          cat .github/workflows/configuration/pr.json >> $github_env
+          echo 'eof' >> $github_env
       - id: extraction
         run:  echo "json=${{ env.json_tmp }}" >> "$GITHUB_OUTPUT"
   shows-configuration:
