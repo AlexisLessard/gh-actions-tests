@@ -14,7 +14,7 @@ jobs:
   Call-remote-workflow:
     uses: AlexisLessard/gh-reusable-workflow-test/.github/workflows/reusable-workflow.yml@main
     with:
-      REMOTE_VAR: ${{ vars.PARAMETER }}
+      REMOTE_VAR: "Je suis un input hardcodé"
       ENVIRONMENT: testenv
     secrets:
       RECEIVED_SECRET: ${{ secrets.SECRET_ID }}
