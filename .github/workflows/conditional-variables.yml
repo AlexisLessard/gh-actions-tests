@@ -22,15 +22,15 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - if: ${{ inputs.ENVIRONMENT == dv }}
+      - if: ${{ inputs.ENVIRONMENT == 'dv' }}
         run: |
           echo "var1='en dev'
           " >> $GITHUB_ENV
-      - if: ${{ inputs.ENVIRONMENT == ap }}
+      - if: ${{ inputs.ENVIRONMENT == 'ap' }}
         run: |
           echo "var1='en app'
           " >> $GITHUB_ENV
-      - if: ${{ inputs.ENVIRONMENT == pr }}
+      - if: ${{ inputs.ENVIRONMENT == 'pr' }}
         run: |
           echo "var1='en prod'
           " >> $GITHUB_ENV
