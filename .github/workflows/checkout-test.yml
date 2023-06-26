@@ -1,0 +1,18 @@
+
+name: Test variables conditionelles
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+jobs:
+    test_checkout:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                repository:  AlexisLessard/gh-reusable-workflow-test
+                ref: refs/heads/main
+                token: ${{ secrets.GITHUB_TOKEN }}
+                path: remote
+            - name: Liste les fichiers puller
+              run: ls -a ./remote
